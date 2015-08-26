@@ -1,4 +1,4 @@
-//以下是task0002第二小节：数据类型及语言基础
+// 以下是task0002第二小节：数据类型及语言基础
 
 // 判断arr是否是一个数组
 function isArray(arr) {
@@ -204,7 +204,7 @@ function $(selector) {
 
 
 
-//以下是task0002第四小节：事件
+// 以下是task0002第四小节：事件
 
 // 给一个element绑定一个针对event事件的响应，响应函数为listener
 function addEvent(element, event, listener) {
@@ -294,4 +294,117 @@ $.delegate = function(selector, tag, event, listener) {
     each(nodeList, function (item, index) {
         delegateEvent(item, tag, event, listener);
     });
+}
+
+
+
+
+
+// 以下是task0002第五小节：BOM
+
+// 判断是否为IE浏览器，返回-1或者版本号
+function isIE() {
+    if (window.ActiveXObject) {
+        return navigator.appVersion;
+    } else return -1;
+}
+
+// 设置cookie
+// 这个函数中的参数存有 cookie 的名称、值以及过期天数。我们首先将天数转换为有效的日期，然后，我们将 cookie 名称、值及其过期日期存入 document.cookie 对象。
+function setCookie(cookieName, cookieValue, expiredays) {
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate()+expiredays);
+    document.cookie=cookieName+ "=" +escape(cookieValue)+((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+}
+
+// 获取cookie值
+function getCookie(cookieName) {
+   if(document.cookie.length > 0) {
+        c_start=document.cookie.indexOf(cookieName + "=")
+        if (c_start != -1) { 
+            c_start=c_start + cookieName.length+1 ;
+            c_end=document.cookie.indexOf(";",c_start);
+            if (c_end==-1) {
+                c_end=document.cookie.length;
+            }
+            //unescape() 函数可对通过 escape() 编码的字符串进行解码
+            return unescape(document.cookie.substring(c_start,c_end));
+        } 
+    } else return "";
+}
+
+
+
+
+
+// 以下是task0002第六小节：Ajax
+
+// 封装一个ajax方法，options是一个对象，里面可以包括的参数为：
+// type: post或者get，可以有一个默认值
+// data: 发送的数据，为一个键值对象或者为一个用&连接的赋值字符串
+// onsuccess: 成功时的调用函数
+// onfail: 失败时的调用函数
+
+//创建对象，用于在后台与服务器交换数据，XMLHttpRequest支持大多数浏览器，ActiveXObject支持ie5/ie6
+function createXHR() {
+    if (XMLHttpRequest) {
+        return new XMLHttpRequest();
+    } else if (ActiveXObject) {
+        return new ActiveXObject("Microsoft.XMLHTTP");
+    } else {
+        alert("不支持ajax");
+    }
+}
+
+//将对象转化为字符串
+function obgToString(obj) {
+    if (typeof obj !== "object") {
+        return obj;
+    }
+    var str = "";
+    var flag = true;
+    for (var i in obj) {
+        if (flag) {
+            str += i + "=" + obj[i];
+            flag = false;
+        } else {
+            str += "&" + i + "=" + obj[i];
+        }
+    }
+    return str;
+}
+
+function ajax(url, options) {
+    var xhr = createXHR();
+    options = options || {};
+    //每当 readyState 改变时，就会触发 onreadystatechange 事件, onreadystatechange 事件中，我们规定当服务器响应已做好被处理的准备时所执行的任务
+    xhr.onreadystatechange = function() {
+        //XMLHttpRequest的状态，4为请求已完成，且响应已就绪
+        if (xhr.readyState == 4) {
+            //200："ok"
+            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                var onsuccess = options.onsuccess || function(responseText, xhr){};
+                onsuccess.call(this, xhr.responseText, xhr);
+            } else {
+                var onfail = options.onsuccess || function(responseText, xhr){};
+                onfail.call(this, xhr.responseText, xhr);
+            }
+        }
+    }
+
+    //向服务器发送请求
+    //data仅用于post传输，为希望发送的数据
+    var data = options.data || "";
+    typeof data == "object" && (data = obgToString(data));
+    var type = options.type || "get";
+    if (type == "get") {
+        url += "?" + data;
+        //type为传输类型，true为异步，false为同步
+        xhr.open(type, url, true);
+        xhr.send(null);
+    } else {
+        xhr.open(type, url, true);
+        xhr.send(data);
+    }
+
 }
