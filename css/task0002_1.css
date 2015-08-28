@@ -1,0 +1,17 @@
+body{
+    font-size: 12px;
+    font-size: Times;
+}
+textarea {
+    width: 300px;
+    height: 100px;
+}
+.prompt {
+    color: #bbb;
+}
+.prompt2 {
+    color: green;
+}
+.prompt3 {
+    color: red;
+}
