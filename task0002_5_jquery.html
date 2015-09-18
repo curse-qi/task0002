@@ -1,0 +1,141 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>小练习 5：界面拖拽交互</title>
+		<style type="text/css">
+			body {
+			    margin: 0;
+			    padding: 0;
+			}
+			#container {
+			    width: 500px;
+			    height: 500px;
+			    background: #aaa;
+			}
+			#left , #right {
+			    width: 150px;
+			    height: 400px;
+			    margin: 50px 50px;
+			    background: #fff;
+			    float: left;
+			}
+			.box {
+			    width: 148px;
+			    height: 49px;
+			    background: #aaa;
+			    border: 1px solid #000;
+			    border-bottom: 0;
+			    position: absolute;
+			}
+			.box1 {
+			    top: 50px;
+			    left: 50px;
+			}
+			.box2 {
+			    top: 100px;
+			    left: 50px;
+			}
+			.box3 {
+			    top: 150px;
+			    left: 50px;
+			}
+			.box4 {
+			    top: 200px;
+			    left: 50px;
+			}
+			.box5 {
+			    top: 50px;
+			    left: 300px;
+			}
+			.box6 {
+			    top: 100px;
+			    left: 300px;
+			}
+			.box7 {
+			    top: 150px;
+			    left: 300px;
+			}
+			.box8 {
+			    top: 200px;
+			    left: 300px;
+			}
+			.newnode {
+				width: 148px;
+				height: 49px;
+				background: red;
+			}
+		</style>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	</head>
+	<body>
+
+		<div id="container">
+			<div id="left">
+				<div class="box box1 slide"></div>
+				<div class="box box2 slide"></div>
+				<div class="box box3 slide"></div>
+				<div class="box box4 slide"></div>
+			</div>
+			<div id="right">
+				<div class="box box5 slide"></div>
+				<div class="box box6 slide"></div>
+				<div class="box box7 slide"></div>
+				<div class="box box8 slide"></div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+
+			var isMove = '';
+			var obj = '';
+			var _x = '';
+			var _y = '';
+
+			//该监听事件的方法用于新创建的div也可以绑定事件，$('.slide').on('mousedown',function(){})对于jquery新创建的div没有用
+			$(document).on('mousedown','.slide',function(e) {
+				isMove = true;
+				obj = $(this);
+
+				_x = e.pageX-parseInt(obj.css("left")); 
+				_y = e.pageY-parseInt(obj.css("top"));
+
+			});
+
+			$(document).on('mousemove','.slide',function(e) {
+				if(isMove && obj != ''){
+					var x=e.pageX-_x;
+					var y=e.pageY-_y; 
+					obj.css({"top":y,"left":x,"z-index":100}); 
+				}
+			});
+
+			$(document).on('mouseup','#left .box',function() {
+				isMove = false;
+
+				if(parseInt(obj.css("left")) > 200 && parseInt(obj.css("left")) <500 && parseInt(obj.css("top")) > 0 && parseInt(obj.css("top")) <500) {
+
+					$('#right').append('<div></div>');
+					$('#right div:last-child').addClass("box slide");
+					//为兼容除火狐外其他浏览器，top和left须设置初始值，否则obj.css不能识别
+					$('#right div:last-child').css({"top":parseInt($('#right').children().length)*50,"left":300});
+					$(this).removeClass("box").remove();
+				}
+			});
+
+			$(document).on('mouseup','#right .box',function() {
+				isMove = false;
+
+				if(parseInt(obj.css("left")) > 0 && parseInt(obj.css("left")) <200 && parseInt(obj.css("top")) > 0 && parseInt(obj.css("top")) <500) {
+
+					$('#left').append('<div></div>');
+					$('#left div:last-child').addClass("box slide");
+					//为兼容除火狐外其他浏览器，top和left须设置初始值，否则obj.css不能识别
+					$('#left div:last-child').css({"top":parseInt($('#left').children().length)*50,"left":50});
+					$(this).removeClass("box").remove();
+				}
+			});
+
+		</script>
+
+	</body>
+</html>

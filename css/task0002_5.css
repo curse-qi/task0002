@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 500px;
+    height: 500px;
+    background: #aaa;
+}
+
+.left , .right {
+    width: 150px;
+    height: 400px;
+    margin: 50px 50px;
+    background: #fff;
+    float: left;
+}
+
+.box1 , .box2 , .box3 , .box4 , .box5 , .box6 , .box7 , .box8 {
+    width: 148px;
+    height: 49px;
+    background: red;
+    border: 1px solid #000;
+    border-bottom: 0;
+    position: absolute;
+}
+.box1 {
+    top: 50px;
+    left: 50px;
+}
+.box2 {
+    top: 100px;
+    left: 50px;
+}
+.box3 {
+    top: 150px;
+    left: 50px;
+}
+.box4 {
+    top: 200px;
+    left: 50px;
+}
+.box5 {
+    top: 50px;
+    left: 300px;
+}
+.box6 {
+    top: 100px;
+    left: 300px;
+}
+.box7 {
+    top: 150px;
+    left: 300px;
+}
+.box8 {
+    top: 200px;
+    left: 300px;
+}

@@ -1,0 +1,47 @@
+* {
+    margin:0;
+    padding:0;
+}
+img {
+    width: 1000px;
+    height: 600px;
+}
+.banner {
+    width: 1000px;
+    height: 600px;
+    position: relative;
+    overflow: hidden;
+}
+.banner-list li {
+    top: 0;
+    left: 0;
+    position: absolute;
+    display: none;
+}
+.banner-list li.active {
+    z-index: 1;
+    display: block;
+}
+.point {
+    list-style: none;
+    left: 47%;
+    bottom: 30px;
+    position: absolute;
+    z-index: 2;
+}
+.point li {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background: #e8e8e8;
+    margin-right: 10px;
+    float: left;
+}
+.point li.active {
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+    background: #fff;
+    top: -3px;
+    position: relative;
+}
