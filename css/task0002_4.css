@@ -1,0 +1,25 @@
+input {
+	width: 200px;
+	height: 40px;
+	font-size: 18px;
+	text-indent: 8px;
+}
+.info {
+	width: 198px;
+	border: 1px solid #aaa;
+	border-top: 0;
+	display: none;
+}
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+ul li {
+	text-indent: 10px;
+	line-height: 25px;
+	font-size: 14px;
+}
+ul li.active {
+	background: #eee;
+}
